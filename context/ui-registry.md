@@ -94,3 +94,20 @@ Last updated: 2026-07-18
 
 **Pattern notes:**
 Badges use full-rounded pill shapes (`radius-full`) with light accent backgrounds and solid accent text to denote roles and permissions.
+
+### Compliance Form
+File: `components/compliance/ComplianceForm.tsx`, `app/compliance/page.tsx`
+Last updated: 2026-07-18
+
+| Property         | Class (Inline Styles mapped to tokens) |
+| ---------------- | -------------------------------------- |
+| Container BG     | `var(--color-surface)`                 |
+| Container Border | `1px solid var(--color-border)`        |
+| Container Radius | `var(--radius-lg)`                     |
+| Spacing          | `padding: 20`                          |
+| Input Fields     | `var(--color-surface)` background, `1px solid var(--color-border)` |
+| Save Button      | `var(--color-accent)` background, `var(--color-accent-foreground)` text |
+
+**Pattern notes:**
+The compliance settings page uses a responsive layout card with standard form labels and comma-separated inputs mapped to string array fields internally.
+

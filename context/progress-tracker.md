@@ -6,11 +6,11 @@ Update this file after every completed feature. Any AI agent (or you, at hour 20
 
 ## Current Status
 
-**Phase:**
-**Last completed:**
-**Next:**
-**Hours elapsed:**
-**On track for full scope?** (yes / cutting per scope-cut list / at risk)
+**Phase:** Phase 2
+**Last completed:** 05 Carrier compliance record CRUD
+**Next:** 06 Rate confirmation versioning
+**Hours elapsed:** 5.5
+**On track for full scope?** yes
 
 ---
 
@@ -29,7 +29,7 @@ Update this file after every completed feature. Any AI agent (or you, at hour 20
 
 ### Phase 2 — Compliance & Rate Data
 
-- [ ] 05 Carrier compliance record CRUD
+- [x] 05 Carrier compliance record CRUD
 - [ ] 06 Rate confirmation versioning
 
 ### Phase 3 — Load Lifecycle
