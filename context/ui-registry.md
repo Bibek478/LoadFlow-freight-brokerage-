@@ -288,3 +288,20 @@ Last updated: 2026-07-18
 
 **Pattern notes:**
 Warning states explicitly utilize light amber status fills with matching dark warning borders to raise urgency. Button link redirects carriers to renewal form page.
+
+### Activity History Sidebar Timeline
+File: Inline in `app/loads/[id]/page.tsx`
+Last updated: 2026-07-18
+
+| Property         | Class (Inline Styles mapped to tokens) |
+| ---------------- | -------------------------------------- |
+| Background       | `var(--color-surface)`                 |
+| Border           | `1px solid var(--color-border)`        |
+| Border radius    | `var(--radius-lg)`                     |
+| Timeline line    | `var(--color-border)`                  |
+| Bullet node      | `var(--color-accent)` (active/first), `var(--color-border)` (inactive) |
+| Text size        | `13px` base state change, `11px` user name and date |
+| Spacing          | `gap: 12` timeline, `paddingBottom: 20` |
+
+**Pattern notes:**
+Draws connected vertical nodes. Accent color highlight applies strictly to the most recent state change node.

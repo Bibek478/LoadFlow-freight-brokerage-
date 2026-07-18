@@ -6,10 +6,10 @@ Update this file after every completed feature. Any AI agent (or you, at hour 20
 
 ## Current Status
 
-**Phase:** Stretch (Feature 13 Completed)
-**Last completed:** 13 Compliance expiry alerts
-**Next:** Production Verification / Other Stretch Features
-**Hours elapsed:** 15.50
+**Phase:** Stretch (Feature 14 Completed)
+**Last completed:** 14 Audit log viewer
+**Next:** Production Verification / Review
+**Hours elapsed:** 16.00
 **On track for full scope?** yes
 
 ---
@@ -53,7 +53,7 @@ Update this file after every completed feature. Any AI agent (or you, at hour 20
 
 - [x] 12 POD upload/viewer
 - [x] 13 Compliance expiry alerts
-- [ ] 14 Audit log viewer
+- [x] 14 Audit log viewer
 
 ---
 
@@ -69,6 +69,7 @@ _List any cuts made from the scope-cut priority list in build-plan.md, and when.
 - **Client-Side Navigation Performance Hotfix (Phase 5):** Formally opted to resolve route transition freezes by moving from imperative raw cursor table-row routes to prefetchable `<Link>` tags embedded within cells (maintaining hover states) and introducing local streaming layout elements (`loading.tsx`) for the dashboard and loads route sections. Added compound indexing targets on all scoping fields in MongoDB (`brokerOrgId`, `carrierOrgId`, `shipperId`) combined with matching sorting criteria (`createdAt: -1`) to avoid database fetch blocks.
 - **POD base64 MongoDB storage (Stretch - Feature 12):** Chose to store the carrier-uploaded Proof of Delivery (POD) documents (PDF / images) directly in the `loads` document inside MongoDB as a base64 Data URL in the `podUrl` string field, bypassing the need for Vercel Blob or external file storage, keeping it responsive and self-contained.
 - **Compliance expiry alerts API & alerts UI (Stretch - Feature 13):** Designed a unified `/api/compliance/alerts` API route to dynamically check and generate insurance expiry alerts based on the session user's role (Carrier checks own, Broker checks carriers of active loads). Rendered customized top-level warning banners on both the Carrier Dashboard and Broker Load Board.
+- **Audit trail sidebar timeline relocation (Stretch - Feature 14):** Moved audit logs from the main body content area into a dedicated sidebar container on the Load Detail page. Styled each status update transition as a connected vertical timeline node, using highlighting color accents for the latest action detail.
 
 ---
 

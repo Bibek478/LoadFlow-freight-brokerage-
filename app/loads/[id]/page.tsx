@@ -303,56 +303,6 @@ export default async function LoadDetailPage({
                             </div>
                         </div>
                     </div>
-
-                    {/* Audit Trail List */}
-                    <div style={{
-                        background: "var(--color-surface)",
-                        border: "1px solid var(--color-border)",
-                        borderRadius: "var(--radius-lg)",
-                        padding: 24
-                    }}>
-                        <h2 style={{ fontSize: 14, fontWeight: 600, color: "var(--color-text-primary)", marginBottom: 16 }}>
-                            Activity Audit Trail ({formattedHistory.length})
-                        </h2>
-
-                        {formattedHistory.length === 0 ? (
-                            <p style={{ fontSize: 13, color: "var(--color-text-muted)", margin: 0 }}>
-                                No history logs recorded yet.
-                            </p>
-                        ) : (
-                            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                                {formattedHistory.map((item: FormattedHistoryItem, idx: number) => (
-                                    <div key={idx} style={{
-                                        borderBottom: idx === formattedHistory.length - 1 ? "none" : "1px solid var(--color-surface-secondary)",
-                                        paddingBottom: idx === formattedHistory.length - 1 ? 0 : 12
-                                    }}>
-                                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
-                                            <span style={{ color: "var(--color-text-primary)" }}>
-                                                <strong>{item.userName}</strong> changed status:
-                                                <span style={{ color: "var(--color-text-secondary)", marginLeft: 6 }}>
-                                                    {item.fromStatus} &rarr; {item.toStatus}
-                                                </span>
-                                            </span>
-                                            <span style={{ color: "var(--color-text-muted)" }}>{item.changedAt}</span>
-                                        </div>
-                                        {item.note && (
-                                            <p style={{
-                                                fontSize: 12,
-                                                color: "var(--color-text-secondary)",
-                                                margin: "4px 0 0 0",
-                                                background: "var(--color-surface-secondary)",
-                                                padding: "6px 10px",
-                                                borderRadius: "var(--radius-sm)",
-                                                display: "inline-block"
-                                            }}>
-                                                Note: {item.note}
-                                            </p>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
                 </div>
 
                 {/* Right Column Control Panels */}
@@ -406,6 +356,90 @@ export default async function LoadDetailPage({
                             isOrgAdmin={user.isOrgAdmin}
                             userPermissions={user.permissions}
                         />
+                    </div>
+
+                    {/* Activity History Sidebar */}
+                    <div style={{
+                        background: "var(--color-surface)",
+                        border: "1px solid var(--color-border)",
+                        borderRadius: "var(--radius-lg)",
+                        padding: "20px 16px"
+                    }}>
+                        <h3 style={{ fontSize: 14, fontWeight: 600, color: "var(--color-text-primary)", marginBottom: 16 }}>
+                            Activity History ({formattedHistory.length})
+                        </h3>
+
+                        {formattedHistory.length === 0 ? (
+                            <p style={{ fontSize: 13, color: "var(--color-text-muted)", margin: 0 }}>
+                                No activity recorded yet.
+                            </p>
+                        ) : (
+                            <div style={{ display: "flex", flexDirection: "column", position: "relative" }}>
+                                {formattedHistory.map((item: FormattedHistoryItem, idx: number) => (
+                                    <div key={idx} style={{
+                                        display: "flex",
+                                        gap: 12,
+                                        position: "relative",
+                                        paddingBottom: idx === formattedHistory.length - 1 ? 0 : 20
+                                    }}>
+                                        {/* Left timeline line and circle */}
+                                        <div style={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            alignItems: "center",
+                                            position: "relative"
+                                        }}>
+                                            {/* Bullet circle */}
+                                            <div style={{
+                                                width: 8,
+                                                height: 8,
+                                                borderRadius: "var(--radius-full)",
+                                                background: idx === 0 ? "var(--color-accent)" : "var(--color-border)",
+                                                border: idx === 0 ? "2px solid var(--color-accent-light)" : "none",
+                                                zIndex: 2,
+                                                marginTop: 4
+                                            }} />
+                                            {/* Line */}
+                                            {idx !== formattedHistory.length - 1 && (
+                                                <div style={{
+                                                    width: 2,
+                                                    position: "absolute",
+                                                    top: 12,
+                                                    bottom: 0,
+                                                    background: "var(--color-border)",
+                                                    zIndex: 1
+                                                }} />
+                                            )}
+                                        </div>
+
+                                        {/* Right content box */}
+                                        <div style={{ flex: 1, minWidth: 0 }}>
+                                            <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                                                <span style={{ fontSize: 13, fontWeight: 600, color: "var(--color-text-primary)" }}>
+                                                    {item.fromStatus ? item.fromStatus : "START"} &rarr; {item.toStatus}
+                                                </span>
+                                                <span style={{ fontSize: 11, color: "var(--color-text-muted)" }}>
+                                                    By <strong>{item.userName}</strong> &bull; {item.changedAt}
+                                                </span>
+                                            </div>
+                                            {item.note && (
+                                                <p style={{
+                                                    fontSize: 12,
+                                                    color: "var(--color-text-secondary)",
+                                                    margin: "6px 0 0 0",
+                                                    background: "var(--color-surface-secondary)",
+                                                    padding: "6px 10px",
+                                                    borderRadius: "var(--radius-sm)",
+                                                    wordBreak: "break-word"
+                                                }}>
+                                                    {item.note}
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
 

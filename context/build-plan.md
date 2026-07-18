@@ -113,14 +113,4 @@ Standalone page reading `AccessDeniedLog` + `LoadStatusHistory` across the org, 
 
 ---
 
-## Scope-Cut Priority List (use live if you're behind schedule)
-
-Cut in this order. Never cut anything below the line — those are the graded core.
-
-1. Drop all three stretch features (12, 13, 14) entirely
-2. Drop dashboard stat-count cards — scoped lists alone are enough
-3. Drop the status dropdown filter on the load board — keep text search only
-4. Reduce equipment/commodity types from free-form tags to a small fixed picklist (still correct logic, far less UI work)
-5. Flatten `accessorials` to a single "extra charges" number instead of an itemized array — still versioned, still base+extra, just simpler to build
-
-**Never cut, no matter how late it gets:** the three account types with real auth, admin-built custom roles via UI, server-side permission enforcement on every route, org + object-level scoping, the load state machine, the audit trail, and compliance auto-flagging that blocks progression. These are the entire point of the "hard" difficulty rating — a demo without them is a different, easier project.
+**Never skip, no matter what:** the three account types with real auth, admin-built custom roles via UI, server-side permission enforcement on every route, org + object-level scoping, the load state machine, the audit trail, and compliance auto-flagging that blocks progression. These are the entire point of the "hard" difficulty rating — a demo without them is a different, easier project.
