@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from "mongoose";
 
-let cached = (global as any).mongoose ?? { conn: null, promise: null };
+const cached = (global as any).mongoose ?? { conn: null, promise: null };
 (global as any).mongoose = cached;
 
 export async function connectDB() {

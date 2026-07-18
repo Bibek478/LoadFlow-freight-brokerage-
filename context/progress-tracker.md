@@ -22,10 +22,10 @@ Update this file after every completed feature. Any AI agent (or you, at hour 20
 
 ### Phase 1 — Auth & RBAC Core
 
-- [ ] 01 Data model & migrations
-- [ ] 02 Auth logic (signup x3, login, logout)
-- [ ] 03 RBAC engine (tested via curl)
-- [ ] 04 Staff & role management UI
+- [x] 01 Data model & migrations
+- [x] 02 Auth logic (signup x3, login, logout)
+- [x] 03 RBAC engine (tested via curl)
+- [x] 04 Staff & role management UI
 
 ### Phase 2 — Compliance & Rate Data
 
