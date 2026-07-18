@@ -215,3 +215,22 @@ Last updated: 2026-07-18
 
 **Pattern notes:**
 Includes search input, status dropdown filtering, a toggleable Post Load form, and lists all scoped loads.
+
+### Carrier Dashboard
+File: `components/dashboard/CarrierDashboard.tsx`
+Last updated: 2026-07-18
+
+| Property         | Class                                                                             |
+| ---------------- | --------------------------------------------------------------------------------- |
+| Background       | `var(--color-surface)` (container), `var(--color-surface-secondary)` (row hover)  |
+| Border           | `1px solid var(--color-border)`                                                   |
+| Border radius    | `var(--radius-lg)` (cards), `var(--radius-sm)` (inline action buttons)            |
+| Text — primary   | `28px` bold `var(--color-text-primary)` (KPIs), `16px` bold (heading)             |
+| Text — secondary | `13px` `var(--color-text-secondary)` (KPI label), `12px` uppercase (table header) |
+| Spacing          | `padding: 20` (KPI cards), `padding: 24` (operations card)                        |
+| Hover state      | cursor pointer on rows, `var(--color-surface-secondary)` background hover         |
+| Shadow           | `none`                                                                            |
+| Accent usage     | `var(--color-accent)` (actions), `var(--color-error)` (shortcut decline action)  |
+
+**Pattern notes:**
+Includes assigned, active, and completed stats counters, plus an inline operations table where users trigger status transition API queries directly.

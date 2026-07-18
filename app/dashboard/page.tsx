@@ -1,6 +1,7 @@
 import { getSessionUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import BrokerDashboard from "@/components/dashboard/BrokerDashboard";
+import CarrierDashboard from "@/components/dashboard/CarrierDashboard";
 
 export default async function DashboardPage() {
     const user = await getSessionUser();
@@ -16,9 +17,9 @@ export default async function DashboardPage() {
                 {user.orgType !== "SHIPPER" && user.isOrgAdmin ? " (Admin)" : ""}
             </p>
 
-            {user.orgType === "BROKER" ? (
-                <BrokerDashboard user={user} />
-            ) : (
+            {user.orgType === "BROKER" && <BrokerDashboard user={user} />}
+            {user.orgType === "CARRIER" && <CarrierDashboard user={user} />}
+            {user.orgType === "SHIPPER" && (
                 <div
                     style={{
                         background: "var(--color-surface)",
@@ -28,10 +29,7 @@ export default async function DashboardPage() {
                     }}
                 >
                     <p style={{ fontSize: 14, color: "var(--color-text-muted)" }}>
-                        {user.orgType === "CARRIER" &&
-                            "Your assigned loads will appear here. Phase 2 coming next."}
-                        {user.orgType === "SHIPPER" &&
-                            "Your shipment status will appear here. Phase 2 coming next."}
+                        Your shipment status will appear here. Phase 2 coming next.
                     </p>
                 </div>
             )}
