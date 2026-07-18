@@ -22,19 +22,80 @@ const createSchema = z.object({
         .transform((val) => (val ? new Date(val) : null)),
 });
 
-export async function GET() {
+import { Org } from "@/lib/models/Org";
+
+export async function GET(req: NextRequest) {
     try {
         const user = await getSessionUser();
         if (!user) {
             throw new ApiError(401, "Unauthorized");
         }
 
+        const { searchParams } = new URL(req.url);
+        const search = searchParams.get("search") || "";
+        const status = searchParams.get("status") || "";
+        const limitStr = searchParams.get("limit");
+        const limit = limitStr ? parseInt(limitStr, 10) : undefined;
+
         await connectDB();
 
         const filter = scopeLoadsWhere(user);
-        const loads = await Load.find(filter).sort({ createdAt: -1 }).lean();
+        let finalFilter: any = { ...filter };
 
-        return NextResponse.json({ success: true, data: loads });
+        if (status) {
+            finalFilter.status = status;
+        }
+
+        if (search) {
+            const matchingShippers = await User.find({
+                orgType: "SHIPPER",
+                name: { $regex: search, $options: "i" }
+            }).select("_id").lean();
+            const shipperIds = matchingShippers.map(s => s._id);
+
+            const matchingCarriers = await Org.find({
+                type: "CARRIER",
+                name: { $regex: search, $options: "i" }
+            }).select("_id").lean();
+            const carrierOrgIds = matchingCarriers.map(c => c._id);
+
+            finalFilter.$or = [
+                { origin: { $regex: search, $options: "i" } },
+                { destination: { $regex: search, $options: "i" } },
+                { shipperId: { $in: shipperIds } },
+                { carrierOrgId: { $in: carrierOrgIds } }
+            ];
+        }
+
+        let query = Load.find(finalFilter).sort({ createdAt: -1 });
+        if (limit) {
+            query = query.limit(limit);
+        }
+
+        const loads = await query.lean();
+
+        // Hydrate shipper and carrier names
+        const shipperIds = loads.map(l => l.shipperId).filter(Boolean);
+        const carrierOrgIds = loads.map(l => l.carrierOrgId).filter(Boolean);
+
+        const shippers = await User.find({ _id: { $in: shipperIds } }).select("name email").lean();
+        const carriers = await Org.find({ _id: { $in: carrierOrgIds } }).select("name").lean();
+
+        const shipperMap = new Map(shippers.map(s => [s._id.toString(), s]));
+        const carrierMap = new Map(carriers.map(c => [c._id.toString(), c]));
+
+        const hydratedLoads = loads.map(l => {
+            const shipper = shipperMap.get(l.shipperId.toString());
+            const carrier = l.carrierOrgId ? carrierMap.get(l.carrierOrgId.toString()) : null;
+            return {
+                ...l,
+                shipperName: shipper?.name || "Unknown Shipper",
+                shipperEmail: shipper?.email || "",
+                carrierName: carrier?.name || "Unassigned"
+            };
+        });
+
+        return NextResponse.json({ success: true, data: hydratedLoads });
     } catch (error) {
         const status = error instanceof ApiError ? error.status : 500;
         if (!(error instanceof ApiError)) console.error("[loads GET]", error);

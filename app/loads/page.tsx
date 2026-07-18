@@ -3,8 +3,8 @@ import { getSessionUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { connectDB } from "@/lib/db";
 import { User } from "@/lib/models/User";
-import LoadForm from "@/components/loads/LoadForm";
-import { hasPermission } from "@/lib/rbac";
+import mongoose from "mongoose";
+import LoadBoard from "@/components/loads/LoadBoard";
 
 export default async function LoadsPage() {
     const user = await getSessionUser();
@@ -14,8 +14,6 @@ export default async function LoadsPage() {
     if (user.orgType !== "BROKER") {
         redirect("/dashboard");
     }
-
-    const canCreate = hasPermission(user, "load.create");
 
     await connectDB();
 
@@ -30,24 +28,7 @@ export default async function LoadsPage() {
 
     return (
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
-            {!canCreate ? (
-                <div style={{
-                    background: "var(--color-surface)",
-                    border: "1px solid var(--color-border)",
-                    borderRadius: "var(--radius-lg)",
-                    padding: 24,
-                    textAlign: "center"
-                }}>
-                    <h2 style={{ fontSize: 16, fontWeight: 600, color: "var(--color-text-primary)", marginBottom: 8 }}>
-                        Load Board
-                    </h2>
-                    <p style={{ fontSize: 14, color: "var(--color-text-secondary)" }}>
-                        You do not have permission to post new loads. Contact org admin.
-                    </p>
-                </div>
-            ) : (
-                <LoadForm shippers={shippersList} />
-            )}
+            <LoadBoard user={user} shippers={shippersList} />
         </div>
     );
 }

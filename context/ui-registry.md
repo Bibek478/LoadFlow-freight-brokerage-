@@ -177,3 +177,41 @@ Last updated: 2026-07-18
 
 **Pattern notes:**
 Status action panels group together contextual operational buttons, using specific red error classes for declines and standard accents for positive progressions.
+
+### Broker Dashboard
+File: `components/dashboard/BrokerDashboard.tsx`
+Last updated: 2026-07-18
+
+| Property         | Class                                                                             |
+| ---------------- | --------------------------------------------------------------------------------- |
+| Background       | `var(--color-surface)` (container), `var(--color-surface-secondary)` (row hover)  |
+| Border           | `1px solid var(--color-border)`, `1px solid var(--color-error)` (flagged stats)   |
+| Border radius    | `var(--radius-lg)` (cards)                                                        |
+| Text — primary   | `28px` bold `var(--color-text-primary)` (KPIs), `16px` bold (heading)             |
+| Text — secondary | `13px` `var(--color-text-secondary)` (KPI label)                                  |
+| Spacing          | `padding: 20` (KPI cards), `padding: 24` (recent card)                            |
+| Hover state      | cursor pointer on rows, `var(--color-surface-secondary)` background               |
+| Shadow           | `none`                                                                            |
+| Accent usage     | `var(--color-accent)` (links, buttons)                                            |
+
+**Pattern notes:**
+Displays three stats counters and 5 recent loads list with row click redirection.
+
+### Load Board (Broker only)
+File: `components/loads/LoadBoard.tsx`, `app/loads/page.tsx`
+Last updated: 2026-07-18
+
+| Property         | Class                                                                             |
+| ---------------- | --------------------------------------------------------------------------------- |
+| Background       | `var(--color-surface)` (wrapper/form/table)                                       |
+| Border           | `1px solid var(--color-border)`                                                   |
+| Border radius    | `var(--radius-lg)` (cards), `var(--radius-md)` (inputs)                           |
+| Text — primary   | `20px` (header), `14px` (table cell)                                              |
+| Text — secondary | `12px` uppercase (table headers), `13px` (sub-header)                             |
+| Spacing          | `padding: 24` (table card), `padding: 20` (filter & post card)                    |
+| Hover state      | cursor pointer on rows, `var(--color-surface-secondary)` background               |
+| Shadow           | `none`                                                                            |
+| Accent usage     | `var(--color-accent)` (active page link, post toggle button)                      |
+
+**Pattern notes:**
+Includes search input, status dropdown filtering, a toggleable Post Load form, and lists all scoped loads.

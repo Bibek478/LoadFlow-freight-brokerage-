@@ -1,5 +1,6 @@
 import { getSessionUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import BrokerDashboard from "@/components/dashboard/BrokerDashboard";
 
 export default async function DashboardPage() {
     const user = await getSessionUser();
@@ -15,23 +16,25 @@ export default async function DashboardPage() {
                 {user.orgType !== "SHIPPER" && user.isOrgAdmin ? " (Admin)" : ""}
             </p>
 
-            <div
-                style={{
-                    background: "var(--color-surface)",
-                    border: "1px solid var(--color-border)",
-                    borderRadius: "var(--radius-lg)",
-                    padding: 20,
-                }}
-            >
-                <p style={{ fontSize: 14, color: "var(--color-text-muted)" }}>
-                    {user.orgType === "BROKER" &&
-                        "Your load board and operations will appear here. Phase 2 coming next."}
-                    {user.orgType === "CARRIER" &&
-                        "Your assigned loads will appear here. Phase 2 coming next."}
-                    {user.orgType === "SHIPPER" &&
-                        "Your shipment status will appear here. Phase 2 coming next."}
-                </p>
-            </div>
+            {user.orgType === "BROKER" ? (
+                <BrokerDashboard user={user} />
+            ) : (
+                <div
+                    style={{
+                        background: "var(--color-surface)",
+                        border: "1px solid var(--color-border)",
+                        borderRadius: "var(--radius-lg)",
+                        padding: 20,
+                    }}
+                >
+                    <p style={{ fontSize: 14, color: "var(--color-text-muted)" }}>
+                        {user.orgType === "CARRIER" &&
+                            "Your assigned loads will appear here. Phase 2 coming next."}
+                        {user.orgType === "SHIPPER" &&
+                            "Your shipment status will appear here. Phase 2 coming next."}
+                    </p>
+                </div>
+            )}
         </div>
     );
 }
