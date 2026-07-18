@@ -178,6 +178,23 @@ Last updated: 2026-07-18
 **Pattern notes:**
 Status action panels group together contextual operational buttons, using specific red error classes for declines and standard accents for positive progressions.
 
+### POD Panel
+File: `components/loads/PodPanel.tsx`
+Last updated: 2026-07-18
+
+| Property         | Class (Inline Styles mapped to tokens) |
+| ---------------- | -------------------------------------- |
+| Background       | `var(--color-surface)`                 |
+| Border           | `1px solid var(--color-border)`        |
+| Border radius    | `var(--radius-lg)` (card)              |
+| Inner container  | `var(--color-surface-secondary)` background, `1px solid var(--color-border)`, `var(--radius-md)` |
+| Spacing          | `padding: 20`                          |
+| Button BG        | `var(--color-accent)` background, `var(--color-accent-foreground)` text |
+| Form inputs      | `var(--color-surface)` background, `1px solid var(--color-border)` |
+
+**Pattern notes:**
+Allows files to be uploaded as base64 and previews them directly. Renders as an image tag if pre-seeded with `data:image/` or showing a custom "View PDF" if starting with `data:application/pdf`.
+
 ### Broker Dashboard
 File: `components/dashboard/BrokerDashboard.tsx`
 Last updated: 2026-07-18

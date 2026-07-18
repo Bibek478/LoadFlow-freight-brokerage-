@@ -13,6 +13,7 @@ import ComplianceOverrideBanner from "@/components/loads/ComplianceOverrideBanne
 import LoadStatusActions from "@/components/loads/LoadStatusActions";
 import CarrierAssignmentPanel from "@/components/loads/CarrierAssignmentPanel";
 import RateConfirmationPanel from "@/components/loads/RateConfirmationPanel";
+import PodPanel from "@/components/loads/PodPanel";
 
 interface StatusBadgeProps {
     status: string;
@@ -373,6 +374,16 @@ export default async function LoadDetailPage({
                         currentStatus={load.status}
                         carrierOrgId={load.carrierOrgId ? load.carrierOrgId.toString() : null}
                         rateConfirmations={rateConfirmationsData}
+                        userOrgType={user.orgType}
+                        isOrgAdmin={user.isOrgAdmin}
+                        userPermissions={user.permissions}
+                    />
+
+                    {/* POD Panel */}
+                    <PodPanel
+                        loadId={load._id.toString()}
+                        currentStatus={load.status}
+                        podUrl={load.podUrl || null}
                         userOrgType={user.orgType}
                         isOrgAdmin={user.isOrgAdmin}
                         userPermissions={user.permissions}
