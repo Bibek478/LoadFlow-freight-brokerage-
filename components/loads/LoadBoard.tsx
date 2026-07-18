@@ -34,11 +34,27 @@ export default function LoadBoard({ user, shippers }: LoadBoardProps) {
     const [search, setSearch] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
     const [loads, setLoads] = useState<TableLoad[]>([]);
+    const [alerts, setAlerts] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [showPostForm, setShowPostForm] = useState(false);
 
     const canCreate = user.isOrgAdmin || user.permissions.includes("load.create");
+
+    useEffect(() => {
+        async function fetchAlerts() {
+            try {
+                const res = await fetch("/api/compliance/alerts");
+                const resJson = await res.json();
+                if (res.ok && resJson.success) {
+                    setAlerts(resJson.data || []);
+                }
+            } catch (err) {
+                console.error("Failed to fetch compliance alerts", err);
+            }
+        }
+        fetchAlerts();
+    }, []);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -75,6 +91,42 @@ export default function LoadBoard({ user, shippers }: LoadBoardProps) {
 
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            {/* Broker Compliance Alerts Banner */}
+            {alerts.length > 0 && (
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    {alerts.map((alert, idx) => {
+                        const isExpired = alert.daysRemaining <= 0;
+                        return (
+                            <div
+                                key={idx}
+                                style={{
+                                    background: "var(--color-warning-light)",
+                                    border: "1px solid var(--color-warning)",
+                                    borderRadius: "var(--radius-lg)",
+                                    padding: 16,
+                                    color: "var(--color-warning)",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 12,
+                                }}
+                            >
+                                <span style={{ fontSize: 18 }}>⚠️</span>
+                                <div>
+                                    <span style={{ fontWeight: 600 }}>COMPLIANCE WARNING:</span>{" "}
+                                    {isExpired ? (
+                                        `Carrier "${alert.carrierName}" assigned to active loads has EXPIRED insurance (expired on ${new Date(alert.expiryDate).toLocaleDateString()}).`
+                                    ) : (
+                                        `Carrier "${alert.carrierName}" assigned to active loads has insurance expiring in ${alert.daysRemaining} days (on ${new Date(alert.expiryDate).toLocaleDateString()}).`
+                                    )}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
+
             {/* Header & Post CTA */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div>

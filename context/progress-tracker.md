@@ -6,10 +6,10 @@ Update this file after every completed feature. Any AI agent (or you, at hour 20
 
 ## Current Status
 
-**Phase:** Stretch (Feature 12 Completed)
-**Last completed:** 12 POD upload/viewer
+**Phase:** Stretch (Feature 13 Completed)
+**Last completed:** 13 Compliance expiry alerts
 **Next:** Production Verification / Other Stretch Features
-**Hours elapsed:** 15.00
+**Hours elapsed:** 15.50
 **On track for full scope?** yes
 
 ---
@@ -52,7 +52,7 @@ Update this file after every completed feature. Any AI agent (or you, at hour 20
 ### Stretch (only if ahead of schedule)
 
 - [x] 12 POD upload/viewer
-- [ ] 13 Compliance expiry alerts
+- [x] 13 Compliance expiry alerts
 - [ ] 14 Audit log viewer
 
 ---
@@ -68,6 +68,7 @@ _List any cuts made from the scope-cut priority list in build-plan.md, and when.
 - **DB swap (before Phase 0):** Switched from Prisma + Neon (PostgreSQL) to Mongoose + MongoDB Atlas. The embedded document model removes transaction-wrapping code: `statusHistory` and `rateConfirmations` are embedded subdocument arrays inside the `loads` document — a status change + audit entry is a single `findOneAndUpdate` with `$push`, no cross-collection session needed. The FK-safety discipline from Postgres is replicated in code: every route resolves org IDs server-side from the session; `carrierOrgId` is validated against the `orgs` collection (confirming `type: 'CARRIER'`) before being written to a load.
 - **Client-Side Navigation Performance Hotfix (Phase 5):** Formally opted to resolve route transition freezes by moving from imperative raw cursor table-row routes to prefetchable `<Link>` tags embedded within cells (maintaining hover states) and introducing local streaming layout elements (`loading.tsx`) for the dashboard and loads route sections. Added compound indexing targets on all scoping fields in MongoDB (`brokerOrgId`, `carrierOrgId`, `shipperId`) combined with matching sorting criteria (`createdAt: -1`) to avoid database fetch blocks.
 - **POD base64 MongoDB storage (Stretch - Feature 12):** Chose to store the carrier-uploaded Proof of Delivery (POD) documents (PDF / images) directly in the `loads` document inside MongoDB as a base64 Data URL in the `podUrl` string field, bypassing the need for Vercel Blob or external file storage, keeping it responsive and self-contained.
+- **Compliance expiry alerts API & alerts UI (Stretch - Feature 13):** Designed a unified `/api/compliance/alerts` API route to dynamically check and generate insurance expiry alerts based on the session user's role (Carrier checks own, Broker checks carriers of active loads). Rendered customized top-level warning banners on both the Carrier Dashboard and Broker Load Board.
 
 ---
 

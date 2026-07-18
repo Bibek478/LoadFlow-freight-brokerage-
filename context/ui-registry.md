@@ -270,3 +270,21 @@ Last updated: 2026-07-18
 
 **Pattern notes:**
 Includes total, in transit, and completed stats counters. Tracking list cells wrap their text contents in Next.js prefetchable links for native client routing.
+
+### Compliance Expiry Alert Banner
+File: Inline in `components/dashboard/CarrierDashboard.tsx` and `components/loads/LoadBoard.tsx`
+Last updated: 2026-07-18
+
+| Property         | Class (Inline Styles mapped to tokens) |
+| ---------------- | -------------------------------------- |
+| Background       | `var(--color-warning-light)`           |
+| Border           | `1px solid var(--color-warning)`       |
+| Border radius    | `var(--radius-lg)`                     |
+| Text — primary   | `var(--color-warning)`                 |
+| Text size        | `14px`, medium weight                  |
+| Spacing          | `padding: 16`, `marginBottom: 20`      |
+| Action Button BG | `var(--color-warning)`                 |
+| Action Button text | `#ffffff` (bold, `13px`)             |
+
+**Pattern notes:**
+Warning states explicitly utilize light amber status fills with matching dark warning borders to raise urgency. Button link redirects carriers to renewal form page.

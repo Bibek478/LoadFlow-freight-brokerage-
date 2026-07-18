@@ -27,6 +27,7 @@ interface CarrierDashboardProps {
 
 export default function CarrierDashboard({ user }: CarrierDashboardProps) {
     const [loads, setLoads] = useState<TableLoad[]>([]);
+    const [alerts, setAlerts] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
@@ -35,12 +36,23 @@ export default function CarrierDashboard({ user }: CarrierDashboardProps) {
 
     async function loadData() {
         try {
-            const res = await fetch("/api/loads");
-            const resJson = await res.json();
-            if (!res.ok || !resJson.success) {
-                throw new Error(resJson.error || "Failed to load carrier data");
+            const [loadsRes, alertsRes] = await Promise.all([
+                fetch("/api/loads"),
+                fetch("/api/compliance/alerts")
+            ]);
+
+            const loadsData = await loadsRes.json();
+            const alertsData = await alertsRes.json();
+
+            if (!loadsRes.ok || !loadsData.success) {
+                throw new Error(loadsData.error || "Failed to load carrier data");
             }
-            setLoads(resJson.data);
+            if (!alertsRes.ok || !alertsData.success) {
+                throw new Error(alertsData.error || "Failed to load compliance alerts");
+            }
+
+            setLoads(loadsData.data);
+            setAlerts(alertsData.data || []);
         } catch (err: any) {
             setError(err.message || "An unexpected error occurred");
         } finally {
@@ -93,6 +105,52 @@ export default function CarrierDashboard({ user }: CarrierDashboardProps) {
 
     return (
         <div>
+            {/* Compliance Expiry Banners */}
+            {alerts.map((alert, idx) => {
+                const isExpired = alert.daysRemaining <= 0;
+                return (
+                    <div
+                        key={idx}
+                        style={{
+                            background: "var(--color-warning-light)",
+                            border: "1px solid var(--color-warning)",
+                            borderRadius: "var(--radius-lg)",
+                            padding: 16,
+                            color: "var(--color-warning)",
+                            fontSize: 14,
+                            fontWeight: 500,
+                            marginBottom: 20,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <div>
+                            <span style={{ fontWeight: 600, marginRight: 6 }}>⚠️ ACTION REQUIRED:</span>
+                            {isExpired ? (
+                                `Your company insurance has EXPIRED (expired on ${new Date(alert.expiryDate).toLocaleDateString()}). Please update compliance record immediately to keep active loads.`
+                            ) : (
+                                `Your company insurance will expire in ${alert.daysRemaining} days (on ${new Date(alert.expiryDate).toLocaleDateString()}). Please renew.`
+                            )}
+                        </div>
+                        <Link
+                            href="/compliance"
+                            style={{
+                                background: "var(--color-warning)",
+                                color: "#ffffff",
+                                padding: "6px 12px",
+                                borderRadius: "var(--radius-md)",
+                                fontSize: 13,
+                                textDecoration: "none",
+                                fontWeight: 600,
+                            }}
+                        >
+                            Update Compliance
+                        </Link>
+                    </div>
+                );
+            })}
+
             {/* Stats Cards */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, marginBottom: 24 }}>
                 <div style={{
