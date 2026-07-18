@@ -57,3 +57,9 @@ export const CARRIER_PERMISSIONS: Permission[] = [
     "pod.upload",
     "staff.manage",
 ];
+
+export const PERMISSIONS_FOR_ORG: Record<Exclude<OrgType, "SHIPPER">, Permission[]> = {
+    BROKER: BROKER_PERMISSIONS,
+    CARRIER: CARRIER_PERMISSIONS,
+};
+

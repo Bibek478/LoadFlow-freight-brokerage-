@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import type { SessionUser, Permission } from "@/types";
-import { PERMISSIONS_FOR_ORG } from "@/lib/rbac";
+import { PERMISSIONS_FOR_ORG } from "@/types";
 import RoleBuilder from "./RoleBuilder";
 import StaffForm from "./StaffForm";
 import StaffList from "./StaffList";

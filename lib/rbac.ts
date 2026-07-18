@@ -1,5 +1,5 @@
 import { ApiError } from "@/types";
-import type { Permission, OrgType, SessionUser } from "@/types";
+import type { Permission, SessionUser } from "@/types";
 import { connectDB } from "@/lib/db";
 import { AccessDeniedLog } from "@/lib/models/AccessDeniedLog";
 
@@ -58,14 +58,3 @@ export function scopeComplianceWhere(user: SessionUser): Record<string, unknown>
     return { carrierOrgId: user.orgId };
 }
 
-// Permission catalog per org type (for role builder UI)
-export const PERMISSIONS_FOR_ORG: Record<Exclude<OrgType, "SHIPPER">, Permission[]> = {
-    BROKER: [
-        "load.create",
-        "load.assign_carrier",
-        "load.override_compliance_flag",
-        "rate.confirm",
-        "staff.manage",
-    ],
-    CARRIER: ["load.update_status", "pod.upload", "staff.manage"],
-};

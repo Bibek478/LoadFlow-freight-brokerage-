@@ -4,7 +4,7 @@
 
 | Layer | Tool | Purpose | Why |
 |---|---|---|---|
-| Framework | Next.js 15 (App Router), TypeScript strict | Full stack — pages + API in one repo | One language, one deploy, fastest path for a solo 24h build |
+| Framework | Next.js 16 (App Router), TypeScript strict | Full stack — pages + API in one repo | One language, one deploy, fastest path for a solo 24h build |
 | Database | MongoDB (MongoDB Atlas free tier) | All persistent data | Serverless-deploy safe; document model lets statusHistory and rateConfirmations embed directly in Load, removing transaction-wrapping code for those writes |
 | ODM | Mongoose | Schema, models, queries | Schema validation without migrations; faster iteration under time pressure; embedded arrays replace the Postgres join tables for audit trail and rate versioning |
 | Auth | Custom — bcrypt + JWT (`jose`) in httpOnly cookie | Session + identity | RBAC needs a custom session payload (org id, org type, admin flag, permissions); a generic auth library fights this more than it helps |
