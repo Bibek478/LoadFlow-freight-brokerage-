@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import type { SessionUser } from "@/types";
 import { LocalStatusBadge } from "../dashboard/BrokerDashboard";
 import LoadForm from "./LoadForm";
@@ -31,7 +31,6 @@ interface LoadBoardProps {
 }
 
 export default function LoadBoard({ user, shippers }: LoadBoardProps) {
-    const router = useRouter();
     const [search, setSearch] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
     const [loads, setLoads] = useState<TableLoad[]>([]);
@@ -240,10 +239,8 @@ export default function LoadBoard({ user, shippers }: LoadBoardProps) {
                             {loads.map((load) => (
                                 <tr
                                     key={load._id}
-                                    onClick={() => router.push(`/loads/${load._id}`)}
                                     style={{
                                         borderBottom: "1px solid var(--color-border)",
-                                        cursor: "pointer",
                                         transition: "background 0.1s ease",
                                         background: loading ? "var(--color-surface-secondary)" : "transparent"
                                     }}
@@ -254,38 +251,50 @@ export default function LoadBoard({ user, shippers }: LoadBoardProps) {
                                         if (!loading) e.currentTarget.style.background = "transparent";
                                     }}
                                 >
-                                    <td style={{ padding: "16px", fontSize: 14, fontWeight: 600, color: "var(--color-text-primary)" }}>
-                                        <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                                            #{load._id.substring(0, 8).toUpperCase()}
-                                            {load.complianceFlagged && (
-                                                <span
-                                                    title={`Compliance flagged: ${load.complianceFlagReason || "Unknown reason"}`}
-                                                    style={{
-                                                        color: "var(--color-error)",
-                                                        fontSize: 14,
-                                                        fontWeight: "bold",
-                                                        cursor: "help"
-                                                    }}
-                                                >
-                                                    ⚠️
-                                                </span>
-                                            )}
-                                        </span>
+                                    <td style={{ padding: 0, fontSize: 14, fontWeight: 600, color: "var(--color-text-primary)" }}>
+                                        <Link href={`/loads/${load._id}`} style={{ display: "block", padding: "16px", color: "inherit", textDecoration: "none" }}>
+                                            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                                                #{load._id.substring(0, 8).toUpperCase()}
+                                                {load.complianceFlagged && (
+                                                    <span
+                                                        title={`Compliance flagged: ${load.complianceFlagReason || "Unknown reason"}`}
+                                                        style={{
+                                                            color: "var(--color-error)",
+                                                            fontSize: 14,
+                                                            fontWeight: "bold",
+                                                            cursor: "help"
+                                                        }}
+                                                    >
+                                                        ⚠️
+                                                    </span>
+                                                )}
+                                            </span>
+                                        </Link>
                                     </td>
-                                    <td style={{ padding: "16px", fontSize: 14, color: "var(--color-text-primary)" }}>
-                                        {load.shipperName}
+                                    <td style={{ padding: 0, fontSize: 14, color: "var(--color-text-primary)" }}>
+                                        <Link href={`/loads/${load._id}`} style={{ display: "block", padding: "16px", color: "inherit", textDecoration: "none" }}>
+                                            {load.shipperName}
+                                        </Link>
                                     </td>
-                                    <td style={{ padding: "16px", fontSize: 14, color: "var(--color-text-primary)" }}>
-                                        {load.origin} &rarr; {load.destination}
+                                    <td style={{ padding: 0, fontSize: 14, color: "var(--color-text-primary)" }}>
+                                        <Link href={`/loads/${load._id}`} style={{ display: "block", padding: "16px", color: "inherit", textDecoration: "none" }}>
+                                            {load.origin} &rarr; {load.destination}
+                                        </Link>
                                     </td>
-                                    <td style={{ padding: "10px 16px" }}>
-                                        <LocalStatusBadge status={load.status} />
+                                    <td style={{ padding: 0 }}>
+                                        <Link href={`/loads/${load._id}`} style={{ display: "block", padding: "10px 16px", color: "inherit", textDecoration: "none" }}>
+                                            <LocalStatusBadge status={load.status} />
+                                        </Link>
                                     </td>
-                                    <td style={{ padding: "16px", fontSize: 14, color: "var(--color-text-primary)" }}>
-                                        {load.carrierName}
+                                    <td style={{ padding: 0, fontSize: 14, color: "var(--color-text-primary)" }}>
+                                        <Link href={`/loads/${load._id}`} style={{ display: "block", padding: "16px", color: "inherit", textDecoration: "none" }}>
+                                            {load.carrierName}
+                                        </Link>
                                     </td>
-                                    <td style={{ padding: "16px", fontSize: 13, color: "var(--color-text-secondary)" }}>
-                                        {new Date(load.pickupDate).toLocaleDateString()}
+                                    <td style={{ padding: 0, fontSize: 13, color: "var(--color-text-secondary)" }}>
+                                        <Link href={`/loads/${load._id}`} style={{ display: "block", padding: "16px", color: "inherit", textDecoration: "none" }}>
+                                            {new Date(load.pickupDate).toLocaleDateString()}
+                                        </Link>
                                     </td>
                                 </tr>
                             ))}

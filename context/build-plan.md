@@ -11,7 +11,7 @@ Not every feature gets a full "mock UI first, wire logic later" pass — that pa
 
 ---
 
-## Phase 0 — Setup & Deploy Skeleton (~45 min)
+## Phase 0 — Setup & Deploy Skeleton
 
 - `create-next-app` (TS, App Router, Tailwind), shadcn init
 - Install Mongoose: `npm install mongoose`
@@ -24,10 +24,10 @@ Not every feature gets a full "mock UI first, wire logic later" pass — that pa
 
 ## Phase 1 — Auth & RBAC Core (backbone)
 
-### 01 Data model — *logic* (~30 min)
+### 01 Data model — *logic*
 All model files in `lib/models/` per architecture.md: Org, User, Role, CarrierComplianceRecord, Load (with embedded `statusHistory` and `rateConfirmations` subdocuments), AccessDeniedLog. No migrations needed — run a `connectDB()` smoke-test to confirm Atlas connectivity.
 
-### 02 Auth logic — *logic* (~1.5 hr)
+### 02 Auth logic — *logic*
 - `lib/auth.ts` — hash/verify password, JWT sign/verify, session cookie
 - `POST /api/auth/signup/broker`, `/signup/carrier` — create Org + User (`is_org_admin: true`) in one transaction
 - `POST /api/auth/signup/shipper` — create User only, no org
@@ -35,11 +35,11 @@ All model files in `lib/models/` per architecture.md: Org, User, Role, CarrierCo
 - `POST /api/auth/logout`
 - Test all four with `curl` before building any form
 
-### 03 RBAC engine — *logic* (~1 hr)
+### 03 RBAC engine — *logic*
 - `lib/rbac.ts` — `hasPermission`, `requirePermission`, `scopeLoadsWhere` (and equivalents for compliance/staff), `logAccessDenied`
 - Write one throwaway test script that: logs in as a Carrier staff user, calls a broker-only endpoint stub, confirms 403 + a row lands in `AccessDeniedLog`. This is the single most important thing to get right before building UI on top of it.
 
-### 04 Staff & Role management — *UI + logic combined* (~2 hr)
+### 04 Staff & Role management — *UI + logic combined*
 - `/staff` page — Admin only (check `isOrgAdmin` server-side, not just hide the nav link)
 - Role builder: name + checkbox list of permissions filtered by org_type (from project-overview.md's assignability table)
 - Staff creation form: name, email, temp password, role dropdown — creates the account immediately, shows temp password once
@@ -50,12 +50,12 @@ All model files in `lib/models/` per architecture.md: Org, User, Role, CarrierCo
 
 ## Phase 2 — Compliance & Rate Data
 
-### 05 Carrier compliance record CRUD — *UI + logic combined* (~1 hr)
+### 05 Carrier compliance record CRUD — *UI + logic combined*
 - `/compliance` page, Carrier org only
 - Form: insurance expiry date, MC/DOT status dropdown, approved equipment types, approved commodity types
 - `GET/PUT /api/compliance` — scoped to the logged-in carrier's own org, no permission gate needed beyond "is carrier staff" (compliance data isn't in the permission catalog — any carrier staff can view it, only relevant permission would be staff.manage-adjacent, but brief doesn't require gating this specifically — keep it simple: any authenticated carrier org member can view/edit)
 
-### 06 Rate confirmation versioning — *logic first, then thin UI* (~1.25 hr)
+### 06 Rate confirmation versioning — *logic first, then thin UI*
 - Logic: `POST /api/rate-confirmations` — behind `rate.confirm`, creates new version per the transaction pattern in library-docs.md, repoints `Load.currentRateConfirmationId`
 - Test with `curl`: confirm twice on the same load, confirm both versions persist and only the latest is `isCurrent`
 - UI: simple panel on the load detail page (built fully in feature 08) — for now just get the API right
@@ -64,7 +64,7 @@ All model files in `lib/models/` per architecture.md: Org, User, Role, CarrierCo
 
 ## Phase 3 — Load Lifecycle
 
-### 07 Load CRUD + state machine + compliance auto-flag — *logic* (~2 hr)
+### 07 Load CRUD + state machine + compliance auto-flag — *logic*
 - `lib/state-machine.ts` — `ALLOWED_TRANSITIONS` map, `canTransition()`
 - `POST /api/loads` (`load.create`), `GET /api/loads` (scoped list)
 - `POST /api/loads/[id]/assign` (`load.assign_carrier`) — sets carrier, runs the compliance check from architecture.md, sets `compliance_flagged`/reason
@@ -72,7 +72,7 @@ All model files in `lib/models/` per architecture.md: Org, User, Role, CarrierCo
 - `POST /api/loads/[id]/override` (`load.override_compliance_flag`) — clears flag, writes audit note
 - Test the whole lifecycle with `curl` end to end, including the blocked-then-overridden path, before touching UI
 
-### 08 Load workflow UI — *UI on top of 06+07* (~2 hr)
+### 08 Load workflow UI — *UI on top of 06+07*
 - `/loads/[id]` — status badge, compliance flag banner, status action buttons (only the ones the user's permissions allow), audit trail list, rate confirmation panel (current + past versions)
 - `/loads` new-load form (`load.create`)
 - Buttons call the routes from feature 07/06 — no new backend logic here, just wiring
@@ -81,35 +81,34 @@ All model files in `lib/models/` per architecture.md: Org, User, Role, CarrierCo
 
 ## Phase 4 — Dashboards & Search
 
-### 09 Broker dashboard + load board search/filter — *UI + logic combined* (~1.5 hr)
+### 09 Broker dashboard + load board search/filter — *UI + logic combined* 
 - `/dashboard` (broker view): a few stat counts (total loads, flagged loads, in-transit) + recent loads list
 - `/loads`: full scoped table, text search (company/shipper/route), status filter dropdown
 
-### 10 Carrier dashboard — *UI + logic combined* (~45 min)
+### 10 Carrier dashboard — *UI + logic combined*
 - Assigned loads list (scoped to carrier org), status action shortcuts inline
 
-### 11 Shipper dashboard — *UI + logic combined* (~30 min)
+### 11 Shipper dashboard — *UI + logic combined*
 - Read-only list of the shipper's own loads with current status
 
 ---
 
-## Phase 5 — Deploy Polish & Walkthrough (~1 hr)
-
-- Full redeploy, click through all three account types on the live URL
-- Write the walkthrough: what's built, stack + one-line reasons (copy from architecture.md), a short note on where AI tooling was used session-by-session, and the one deliberate simplification you made under time pressure (permissions baked into JWT at login — see library-docs.md)
-- Update progress-tracker.md to final state
+## Phase 5 — Client-Side Navigation Performance Optimization
+- Replace imperative page row `router.push` transitions on all dashboard lists (Broker, Carrier, Shipper) and the main Load Board table with semantic Next.js `<Link>` components wrapped inside td nodes.
+- Implement streaming fallback UI boundaries via custom `loading.tsx` loaders for dashboard, loads, load details, staff, and compliance pages.
+- Add compound indexing on scoping constraints (`brokerOrgId`, `carrierOrgId`, `shipperId`) combined with chronological sorting parameters to optimize database execution paths.
 
 ---
 
 ## Stretch — only attempt after Phase 5 is done and deployed
 
-### 12 POD upload/viewer (~1 hr)
+### 12 POD upload/viewer
 `POST /api/loads/[id]/pod` behind `pod.upload`, Vercel Blob, transitions to `POD_VERIFIED`.
 
-### 13 Compliance expiry renewal alerts (~30 min)
+### 13 Compliance expiry renewal alerts
 Banner on carrier dashboard + broker load board when `insurance_expiry` is within 30 days.
 
-### 14 Audit log viewer (~45 min)
+### 14 Audit log viewer
 Standalone page reading `AccessDeniedLog` + `LoadStatusHistory` across the org, admin only.
 
 ---

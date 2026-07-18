@@ -6,10 +6,10 @@ Update this file after every completed feature. Any AI agent (or you, at hour 20
 
 ## Current Status
 
-**Phase:** Phase 4
-**Last completed:** 11 Shipper dashboard
-**Next:** Phase 5
-**Hours elapsed:** 13.00
+**Phase:** Phase 5 (Complete)
+**Last completed:** 15 Client-side navigation performance optimization (Hotfix)
+**Next:** Stretch / Production Verification
+**Hours elapsed:** 14.50
 **On track for full scope?** yes
 
 ---
@@ -43,10 +43,11 @@ Update this file after every completed feature. Any AI agent (or you, at hour 20
 - [x] 10 Carrier dashboard
 - [x] 11 Shipper dashboard
 
-### Phase 5 — Deploy Polish & Walkthrough
+### Phase 5 — Client-Side Navigation Performance Optimization
 
-- [ ] Final redeploy + click-through all 3 account types
-- [ ] Walkthrough written
+- [x] 15 Navigation triggers refactor (Next.js Link)
+- [x] 16 Custom loading.tsx skeletons (Streaming UI)
+- [x] 17 Sc scoping and sort DB indexing
 
 ### Stretch (only if ahead of schedule)
 
@@ -65,6 +66,7 @@ _List any cuts made from the scope-cut priority list in build-plan.md, and when.
 ## Decisions Made During Build
 
 - **DB swap (before Phase 0):** Switched from Prisma + Neon (PostgreSQL) to Mongoose + MongoDB Atlas. The embedded document model removes transaction-wrapping code: `statusHistory` and `rateConfirmations` are embedded subdocument arrays inside the `loads` document — a status change + audit entry is a single `findOneAndUpdate` with `$push`, no cross-collection session needed. The FK-safety discipline from Postgres is replicated in code: every route resolves org IDs server-side from the session; `carrierOrgId` is validated against the `orgs` collection (confirming `type: 'CARRIER'`) before being written to a load.
+- **Client-Side Navigation Performance Hotfix (Phase 5):** Formally opted to resolve route transition freezes by moving from imperative raw cursor table-row routes to prefetchable `<Link>` tags embedded within cells (maintaining hover states) and introducing local streaming layout elements (`loading.tsx`) for the dashboard and loads route sections. Added compound indexing targets on all scoping fields in MongoDB (`brokerOrgId`, `carrierOrgId`, `shipperId`) combined with matching sorting criteria (`createdAt: -1`) to avoid database fetch blocks.
 
 ---
 

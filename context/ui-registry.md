@@ -190,12 +190,12 @@ Last updated: 2026-07-18
 | Text — primary   | `28px` bold `var(--color-text-primary)` (KPIs), `16px` bold (heading)             |
 | Text — secondary | `13px` `var(--color-text-secondary)` (KPI label)                                  |
 | Spacing          | `padding: 20` (KPI cards), `padding: 24` (recent card)                            |
-| Hover state      | cursor pointer on rows, `var(--color-surface-secondary)` background               |
+| Hover state      | Cell text wrapped in Next.js `<Link>` components, row background highlights to `var(--color-surface-secondary)` |
 | Shadow           | `none`                                                                            |
 | Accent usage     | `var(--color-accent)` (links, buttons)                                            |
 
 **Pattern notes:**
-Displays three stats counters and 5 recent loads list with row click redirection.
+Displays three stats counters and 5 recent loads list. Navigation is handled natively by wrapping cell contents in Next.js prefetching `<Link>` tags with `padding` shifted from the cell container onto the link for maximum clickability.
 
 ### Load Board (Broker only)
 File: `components/loads/LoadBoard.tsx`, `app/loads/page.tsx`
@@ -209,12 +209,12 @@ Last updated: 2026-07-18
 | Text — primary   | `20px` (header), `14px` (table cell)                                              |
 | Text — secondary | `12px` uppercase (table headers), `13px` (sub-header)                             |
 | Spacing          | `padding: 24` (table card), `padding: 20` (filter & post card)                    |
-| Hover state      | cursor pointer on rows, `var(--color-surface-secondary)` background               |
+| Hover state      | Cell text wrapped in Next.js `<Link>` components, row background highlights to `var(--color-surface-secondary)` |
 | Shadow           | `none`                                                                            |
 | Accent usage     | `var(--color-accent)` (active page link, post toggle button)                      |
 
 **Pattern notes:**
-Includes search input, status dropdown filtering, a toggleable Post Load form, and lists all scoped loads.
+Includes search input, status dropdown filtering, a toggleable Post Load form, and lists all scoped loads. Navigation matches the dashboard, routing natively via Next.js prefetchable Link tags wrapped inside cells.
 
 ### Carrier Dashboard
 File: `components/dashboard/CarrierDashboard.tsx`
@@ -228,12 +228,12 @@ Last updated: 2026-07-18
 | Text — primary   | `28px` bold `var(--color-text-primary)` (KPIs), `16px` bold (heading)             |
 | Text — secondary | `13px` `var(--color-text-secondary)` (KPI label), `12px` uppercase (table header) |
 | Spacing          | `padding: 20` (KPI cards), `padding: 24` (operations card)                        |
-| Hover state      | cursor pointer on rows, `var(--color-surface-secondary)` background hover         |
+| Hover state      | Cell text wrapped in Next.js `<Link>` components, row background highlights to `var(--color-surface-secondary)` |
 | Shadow           | `none`                                                                            |
 | Accent usage     | `var(--color-accent)` (actions), `var(--color-error)` (shortcut decline action)  |
 
 **Pattern notes:**
-Includes assigned, active, and completed stats counters, plus an inline operations table where users trigger status transition API queries directly.
+Includes assigned, active, and completed stats counters, plus an inline operations table where users trigger status transition API queries directly. Non-shortcut columns navigate natively via Next.js prefetchable links.
 
 ### Shipper Dashboard
 File: `components/dashboard/ShipperDashboard.tsx`
@@ -247,9 +247,9 @@ Last updated: 2026-07-18
 | Text — primary   | `28px` bold `var(--color-text-primary)` (KPIs), `16px` bold (heading)             |
 | Text — secondary | `13px` `var(--color-text-secondary)` (KPI label), `12px` uppercase (table header) |
 | Spacing          | `padding: 20` (KPI cards), `padding: 24` (tracking card)                          |
-| Hover state      | cursor pointer on rows, `var(--color-surface-secondary)` background hover         |
+| Hover state      | Cell text wrapped in Next.js `<Link>` components, row background highlights to `var(--color-surface-secondary)` |
 | Shadow           | `none`                                                                            |
 | Accent usage     | `none` (no action buttons or rate confirmations visible)                          |
 
 **Pattern notes:**
-Includes total, in transit, and completed stats counters, plus an inline tracker table displaying shipments read-only without rates.
+Includes total, in transit, and completed stats counters. Tracking list cells wrap their text contents in Next.js prefetchable links for native client routing.

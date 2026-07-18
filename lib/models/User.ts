@@ -13,4 +13,6 @@ const UserSchema = new Schema(
     { timestamps: true }
 );
 
+UserSchema.index({ orgId: 1 });
+
 export const User = mongoose.models.User ?? mongoose.model("User", UserSchema);

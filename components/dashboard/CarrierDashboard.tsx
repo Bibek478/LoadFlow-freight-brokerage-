@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import type { SessionUser } from "@/types";
 import { LocalStatusBadge } from "./BrokerDashboard";
 
@@ -26,7 +26,6 @@ interface CarrierDashboardProps {
 }
 
 export default function CarrierDashboard({ user }: CarrierDashboardProps) {
-    const router = useRouter();
     const [loads, setLoads] = useState<TableLoad[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -208,60 +207,40 @@ export default function CarrierDashboard({ user }: CarrierDashboardProps) {
                                             onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-surface-secondary)")}
                                             onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                                         >
-                                            <td
-                                                onClick={() => router.push(`/loads/${load._id}`)}
-                                                style={{
-                                                    padding: "16px",
-                                                    fontSize: 14,
-                                                    fontWeight: 600,
-                                                    color: "var(--color-text-primary)",
-                                                    cursor: "pointer"
-                                                }}
-                                            >
-                                                <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                                                    #{load._id.substring(0, 8).toUpperCase()}
-                                                    {load.complianceFlagged && (
-                                                        <span
-                                                            title="Compliance flagged"
-                                                            style={{
-                                                                color: "var(--color-error)",
-                                                                fontSize: 14,
-                                                                fontWeight: "bold",
-                                                                cursor: "help"
-                                                            }}
-                                                        >
-                                                            ⚠️
-                                                        </span>
-                                                    )}
-                                                </span>
+                                            <td style={{ padding: 0, fontSize: 14, fontWeight: 600, color: "var(--color-text-primary)" }}>
+                                                <Link href={`/loads/${load._id}`} style={{ display: "block", padding: "16px", color: "inherit", textDecoration: "none" }}>
+                                                    <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                                                        #{load._id.substring(0, 8).toUpperCase()}
+                                                        {load.complianceFlagged && (
+                                                            <span
+                                                                title="Compliance flagged"
+                                                                style={{
+                                                                    color: "var(--color-error)",
+                                                                    fontSize: 14,
+                                                                    fontWeight: "bold",
+                                                                    cursor: "help"
+                                                                }}
+                                                            >
+                                                                ⚠️
+                                                            </span>
+                                                        )}
+                                                    </span>
+                                                </Link>
                                             </td>
-                                            <td
-                                                onClick={() => router.push(`/loads/${load._id}`)}
-                                                style={{
-                                                    padding: "16px",
-                                                    fontSize: 14,
-                                                    color: "var(--color-text-primary)",
-                                                    cursor: "pointer"
-                                                }}
-                                            >
-                                                {load.origin} &rarr; {load.destination}
+                                            <td style={{ padding: 0, fontSize: 14, color: "var(--color-text-primary)" }}>
+                                                <Link href={`/loads/${load._id}`} style={{ display: "block", padding: "16px", color: "inherit", textDecoration: "none" }}>
+                                                    {load.origin} &rarr; {load.destination}
+                                                </Link>
                                             </td>
-                                            <td
-                                                onClick={() => router.push(`/loads/${load._id}`)}
-                                                style={{
-                                                    padding: "16px",
-                                                    fontSize: 14,
-                                                    color: "var(--color-text-primary)",
-                                                    cursor: "pointer"
-                                                }}
-                                            >
-                                                {currentRate ? `$${currentRate.totalRate}` : "Negotiating"}
+                                            <td style={{ padding: 0, fontSize: 14, color: "var(--color-text-primary)" }}>
+                                                <Link href={`/loads/${load._id}`} style={{ display: "block", padding: "16px", color: "inherit", textDecoration: "none" }}>
+                                                    {currentRate ? `$${currentRate.totalRate}` : "Negotiating"}
+                                                </Link>
                                             </td>
-                                            <td
-                                                onClick={() => router.push(`/loads/${load._id}`)}
-                                                style={{ padding: "10px 16px", cursor: "pointer" }}
-                                            >
-                                                <LocalStatusBadge status={load.status} />
+                                            <td style={{ padding: 0 }}>
+                                                <Link href={`/loads/${load._id}`} style={{ display: "block", padding: "10px 16px", color: "inherit", textDecoration: "none" }}>
+                                                    <LocalStatusBadge status={load.status} />
+                                                </Link>
                                             </td>
                                             <td style={{ padding: "12px 16px" }}>
                                                 {hasUpdateStatus && !isPendingAction && (

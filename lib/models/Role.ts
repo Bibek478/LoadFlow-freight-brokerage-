@@ -10,4 +10,6 @@ const RoleSchema = new Schema(
     { timestamps: true }
 );
 
+RoleSchema.index({ orgId: 1 });
+
 export const Role = mongoose.models.Role ?? mongoose.model("Role", RoleSchema);

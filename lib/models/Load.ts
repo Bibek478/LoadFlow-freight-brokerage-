@@ -45,4 +45,8 @@ const LoadSchema = new Schema(
     { timestamps: true }
 );
 
+LoadSchema.index({ brokerOrgId: 1, createdAt: -1 });
+LoadSchema.index({ carrierOrgId: 1, createdAt: -1 });
+LoadSchema.index({ shipperId: 1, createdAt: -1 });
+
 export const Load = mongoose.models.Load ?? mongoose.model("Load", LoadSchema);
