@@ -9,8 +9,6 @@ Not every feature gets a full "mock UI first, wire logic later" pass — that pa
 - **RBAC (Phase 1) and the Load state machine (Phase 3)** are built and tested as **logic first** — via `curl`/a test script, no UI — because bugs in these two systems are expensive to find once a UI is sitting on top of them, and they're the parts actually being graded most closely.
 - **Everything else** (compliance records, rate confirmations, dashboards, load board) is built **UI + logic together** in a single pass per feature — faster, and the UI is a fine test surface for straightforward CRUD.
 
-Commit after every numbered feature below, with the feature number in the message (e.g. `04: staff and role management`). That commit trail is your "AI usage kept visible" evidence.
-
 ---
 
 ## Phase 0 — Setup & Deploy Skeleton (~45 min)

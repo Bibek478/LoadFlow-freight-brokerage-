@@ -111,3 +111,69 @@ Last updated: 2026-07-18
 **Pattern notes:**
 The compliance settings page uses a responsive layout card with standard form labels and comma-separated inputs mapped to string array fields internally.
 
+### Load Posting Form & Selection Panel
+File: `components/loads/LoadForm.tsx`, `components/loads/CarrierAssignmentPanel.tsx`
+Last updated: 2026-07-18
+
+| Property         | Class (Inline Styles mapped to tokens) |
+| ---------------- | -------------------------------------- |
+| Background       | `var(--color-surface)`                 |
+| Border           | `1px solid var(--color-border)`        |
+| Border radius    | `var(--radius-lg)` (card), `var(--radius-md)` (inputs) |
+| Text — primary   | `var(--color-text-primary)`, `16px`    |
+| Text — secondary | `var(--color-text-secondary)`, `13px`  |
+| Spacing          | `padding: 24`, `padding: 20`           |
+| Hover state      | Cursor pointer                         |
+
+**Pattern notes:**
+Standardizes form layouts inside cards using existing auth/staff spacing variables, maintaining a consistent `--radius-lg` for outer panels and `--radius-md` for interactive inner fields.
+
+### Compliance Override Alert Banner
+File: `components/loads/ComplianceOverrideBanner.tsx`
+Last updated: 2026-07-18
+
+| Property         | Class (Inline Styles mapped to tokens) |
+| ---------------- | -------------------------------------- |
+| Background       | `var(--color-warning-light)`           |
+| Border           | `1px solid var(--color-warning)`       |
+| Border radius    | `var(--radius-lg)`                     |
+| Text — primary   | `var(--color-warning)` (Heading)       |
+| Text — secondary | `var(--color-text-primary)` (Desc)     |
+| Spacing          | `padding: 16`                          |
+| Button BG        | `var(--color-warning)`                 |
+| Button Text      | `#ffffff`                              |
+
+**Pattern notes:**
+Warning states diverge from standard accent colors, explicitly introducing amber/warning token clusters to highlight non-compliant states prominently.
+
+### Rate Confirmation Panel
+File: `components/loads/RateConfirmationPanel.tsx`
+Last updated: 2026-07-18
+
+| Property         | Class (Inline Styles mapped to tokens) |
+| ---------------- | -------------------------------------- |
+| Background       | `var(--color-surface-secondary)`       |
+| Border           | `1px solid var(--color-border)`        |
+| Border radius    | `var(--radius-md)`                     |
+| Text — primary   | `24px` bold `var(--color-text-primary)`|
+| Text — accent    | `var(--color-accent)`                  |
+| Spacing          | `padding: 16`                          |
+| Timeline Border  | `borderLeft: "2px solid var(--color-border)"` |
+
+**Pattern notes:**
+Uses a dashed bottom border or left solid border to denote itemized accessorials and historical rate timelines, keeping historical data visually subdued compared to the active rate.
+
+### Transit Action Panel
+File: `components/loads/LoadStatusActions.tsx`
+Last updated: 2026-07-18
+
+| Property         | Class (Inline Styles mapped to tokens) |
+| ---------------- | -------------------------------------- |
+| Background       | `var(--color-surface-secondary)`       |
+| Border           | `1px solid var(--color-border)`        |
+| Border radius    | `var(--radius-md)`                     |
+| Text — primary   | `var(--color-text-secondary)`, `12px`  |
+| Button padding   | `padding: 8px 16px`                    |
+
+**Pattern notes:**
+Status action panels group together contextual operational buttons, using specific red error classes for declines and standard accents for positive progressions.

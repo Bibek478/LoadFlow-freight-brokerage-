@@ -7,9 +7,9 @@ Update this file after every completed feature. Any AI agent (or you, at hour 20
 ## Current Status
 
 **Phase:** Phase 3
-**Last completed:** 07 Load CRUD + state machine + compliance auto-flag
-**Next:** 08 Load workflow UI
-**Hours elapsed:** 8.75
+**Last completed:** 08 Load workflow UI
+**Next:** 09 Broker dashboard + load board search/filter
+**Hours elapsed:** 10.75
 **On track for full scope?** yes
 
 ---
@@ -35,7 +35,7 @@ Update this file after every completed feature. Any AI agent (or you, at hour 20
 ### Phase 3 — Load Lifecycle
 
 - [x] 07 Load CRUD + state machine + compliance auto-flag
-- [ ] 08 Load workflow UI
+- [x] 08 Load workflow UI
 
 ### Phase 4 — Dashboards & Search
 
