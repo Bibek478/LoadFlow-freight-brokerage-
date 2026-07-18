@@ -2,6 +2,7 @@ import { getSessionUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import BrokerDashboard from "@/components/dashboard/BrokerDashboard";
 import CarrierDashboard from "@/components/dashboard/CarrierDashboard";
+import ShipperDashboard from "@/components/dashboard/ShipperDashboard";
 
 export default async function DashboardPage() {
     const user = await getSessionUser();
@@ -19,20 +20,7 @@ export default async function DashboardPage() {
 
             {user.orgType === "BROKER" && <BrokerDashboard user={user} />}
             {user.orgType === "CARRIER" && <CarrierDashboard user={user} />}
-            {user.orgType === "SHIPPER" && (
-                <div
-                    style={{
-                        background: "var(--color-surface)",
-                        border: "1px solid var(--color-border)",
-                        borderRadius: "var(--radius-lg)",
-                        padding: 20,
-                    }}
-                >
-                    <p style={{ fontSize: 14, color: "var(--color-text-muted)" }}>
-                        Your shipment status will appear here. Phase 2 coming next.
-                    </p>
-                </div>
-            )}
+            {user.orgType === "SHIPPER" && <ShipperDashboard user={user} />}
         </div>
     );
 }

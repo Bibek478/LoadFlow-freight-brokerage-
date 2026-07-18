@@ -234,3 +234,22 @@ Last updated: 2026-07-18
 
 **Pattern notes:**
 Includes assigned, active, and completed stats counters, plus an inline operations table where users trigger status transition API queries directly.
+
+### Shipper Dashboard
+File: `components/dashboard/ShipperDashboard.tsx`
+Last updated: 2026-07-18
+
+| Property         | Class                                                                             |
+| ---------------- | --------------------------------------------------------------------------------- |
+| Background       | `var(--color-surface)` (container), `var(--color-surface-secondary)` (row hover)  |
+| Border           | `1px solid var(--color-border)`                                                   |
+| Border radius    | `var(--radius-lg)` (cards)                                                        |
+| Text — primary   | `28px` bold `var(--color-text-primary)` (KPIs), `16px` bold (heading)             |
+| Text — secondary | `13px` `var(--color-text-secondary)` (KPI label), `12px` uppercase (table header) |
+| Spacing          | `padding: 20` (KPI cards), `padding: 24` (tracking card)                          |
+| Hover state      | cursor pointer on rows, `var(--color-surface-secondary)` background hover         |
+| Shadow           | `none`                                                                            |
+| Accent usage     | `none` (no action buttons or rate confirmations visible)                          |
+
+**Pattern notes:**
+Includes total, in transit, and completed stats counters, plus an inline tracker table displaying shipments read-only without rates.
