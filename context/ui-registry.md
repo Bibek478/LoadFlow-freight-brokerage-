@@ -33,7 +33,7 @@ Auth containers use a centered flex layout (`minHeight: "calc(100vh - 60px)"`) w
 
 ### Forms & Inputs
 File: `components/auth/SignupForm.tsx`, `components/staff/StaffForm.tsx`, `components/staff/RoleBuilder.tsx`
-Last updated: 2026-07-18
+Last updated: 2026-07-19
 
 | Property         | Class (Inline Styles mapped to tokens) |
 | ---------------- | -------------------------------------- |
@@ -67,7 +67,7 @@ Primary buttons use `--color-accent` background with hover state delegated to na
 
 ### Layout Panels & Tabs
 File: `components/staff/StaffPageClient.tsx`
-Last updated: 2026-07-18
+Last updated: 2026-07-19
 
 | Property         | Class (Inline Styles mapped to tokens) |
 | ---------------- | -------------------------------------- |
@@ -83,7 +83,7 @@ Panels use `flex: 2` (lists) or `flex: 1` (editors) in a `flex-wrap` container w
 
 ### Badges & Tags
 File: `components/staff/StaffList.tsx`, `components/staff/StaffPageClient.tsx`
-Last updated: 2026-07-18
+Last updated: 2026-07-19
 
 | Property         | Class (Inline Styles mapped to tokens) |
 | ---------------- | -------------------------------------- |

@@ -63,3 +63,14 @@ export const PERMISSIONS_FOR_ORG: Record<Exclude<OrgType, "SHIPPER">, Permission
     CARRIER: CARRIER_PERMISSIONS,
 };
 
+export const PERMISSION_LABELS: Record<Permission, string> = {
+    "load.create": "Create Loads",
+    "load.assign_carrier": "Assign Carrier",
+    "load.override_compliance_flag": "Override Compliance Flag",
+    "rate.confirm": "Confirm Rates",
+    "load.update_status": "Update Load Status",
+    "staff.manage": "Manage Staff & Roles",
+    "pod.upload": "Upload POD",
+};
+
+

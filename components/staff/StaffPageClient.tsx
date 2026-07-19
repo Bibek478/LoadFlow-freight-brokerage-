@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import type { SessionUser, Permission } from "@/types";
-import { PERMISSIONS_FOR_ORG } from "@/types";
+import { PERMISSIONS_FOR_ORG, PERMISSION_LABELS } from "@/types";
 import RoleBuilder from "./RoleBuilder";
 import StaffForm from "./StaffForm";
 import StaffList from "./StaffList";
@@ -173,7 +173,7 @@ export default function StaffPageClient({ user }: StaffPageClientProps) {
                                                         borderRadius: "var(--radius-full)",
                                                     }}
                                                 >
-                                                    {p}
+                                                    {PERMISSION_LABELS[p] || p}
                                                 </span>
                                             ))}
                                         </div>

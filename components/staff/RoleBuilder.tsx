@@ -1,17 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { PERMISSION_LABELS } from "@/types";
 import type { Permission } from "@/types";
-
-const ALL_LABELS: Record<Permission, string> = {
-    "load.create": "Create Loads",
-    "load.assign_carrier": "Assign Carrier",
-    "load.override_compliance_flag": "Override Compliance Flag",
-    "rate.confirm": "Confirm Rates",
-    "load.update_status": "Update Load Status",
-    "staff.manage": "Manage Staff & Roles",
-    "pod.upload": "Upload POD",
-};
 
 interface RoleBuilderProps {
     availablePermissions: Permission[];
@@ -87,8 +78,7 @@ export default function RoleBuilder({ availablePermissions, onRoleCreated }: Rol
                                 id={`perm-${p}`}
                                 style={{ accentColor: "var(--color-accent)" }}
                             />
-                            <span style={{ color: "var(--color-text-primary)" }}>{ALL_LABELS[p]}</span>
-                            <span style={{ fontSize: 12, color: "var(--color-text-muted)" }}>({p})</span>
+                            <span style={{ color: "var(--color-text-primary)" }}>{PERMISSION_LABELS[p]}</span>
                         </label>
                     ))}
                 </div>
