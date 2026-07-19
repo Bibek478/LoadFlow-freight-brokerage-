@@ -48,7 +48,7 @@ Last updated: 2026-07-19
 | Spacing          | `padding: "8px 12px"`                  |
 
 **Pattern notes:**
-Inputs use `radius-md` while panels/containers use `radius-lg`. Error messages use an explicit `--color-error-light` background and border. All labels are `13px` font weight `500`.
+Inputs use `radius-md` while panels/containers use `radius-lg`. Error messages use an explicit `--color-error-light` background and border. All labels are `13px` font weight `500`. Password fields use a relative container with an absolute-positioned button on the right containing SVG icons for Eye and Eye Off (`showPassword` state toggle).
 
 ### Buttons
 File: `components/auth/SignupForm.tsx`, `components/staff/StaffForm.tsx`
